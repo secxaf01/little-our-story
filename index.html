@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kenangan Kita</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+    :root {
+      --pink: #d96476;
+      --dark-pink: #b44d60;
+      --cream: #fffaf7;
+      --text: #493632;
+      --muted: #806c67;
+      --line: #f1d8d2;
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at 10% 5%, #ffe2df 0, transparent 25rem),
+        radial-gradient(circle at 100% 30%, #ffe9c8 0, transparent 23rem),
+        var(--cream);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .3;
+      pointer-events: none;
+      background-image: radial-gradient(#d88c91 .7px, transparent .7px);
+      background-size: 17px 17px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      letter-spacing: -.05em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      letter-spacing: -.04em;
+    }
+
+    p { color: var(--muted); }
+
+    .wrap {
+      width: min(1080px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 25px 0;
+      z-index: 2;
+    }
+
+    .topbar .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      color: var(--text);
+      font-family: "Playfair Display", serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .brand span { color: var(--pink); }
+
+    .topbar a:last-child {
+      color: var(--dark-pink);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: 110px 0 55px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--dark-pink);
+      font-size: .75rem;
+      font-weight: bold;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .script {
+      display: block;
+      color: var(--dark-pink);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-style: italic;
+    }
+
+    .hero p {
+      max-width: 530px;
+      margin: 22px 0 28px;
+      font-size: 1.1rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 21px;
+      background: var(--dark-pink);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      transition: .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(180, 77, 96, .25);
+    }
+
+    .button-light {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--dark-pink);
+    }
+
+    .hero-picture {
+      position: relative;
+      width: min(100%, 390px);
+      aspect-ratio: 4 / 5;
+      justify-self: center;
+    }
+
+    .photo-frame {
+      position: absolute;
+      inset: 0;
+      padding: 11px 11px 49px;
+      background: white;
+      border-radius: 3px;
+      box-shadow: 0 18px 45px rgba(110, 65, 60, .16);
+      transform: rotate(4deg);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #f5d9d2;
+    }
+
+    .photo-frame::after {
+      content: "our little story ♡";
+      display: block;
+      padding-top: 8px;
+      color: #9a817b;
+      text-align: center;
+      font-family: "Playfair Display", serif;
+    }
+
+    .sticker {
+      position: absolute;
+      bottom: 7%;
+      left: -12%;
+      display: grid;
+      place-items: center;
+      width: 76px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #ffe3aa;
+      box-shadow: 0 9px 18px rgba(148, 97, 63, .16);
+      font-size: 2rem;
+      transform: rotate(-11deg);
+    }
+
+    main { padding-bottom: 60px; }
+    section { padding: 38px 0; }
+
+    .card {
+      padding: clamp(25px, 5vw, 52px);
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .75);
+      box-shadow: 0 18px 50px rgba(117, 70, 65, .12);
+      backdrop-filter: blur(10px);
+    }
+
+    .memory {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .memory-img {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
+      border: 7px solid white;
+      border-radius: 18px;
+      background: #f5d9d2;
+      box-shadow: 0 12px 25px rgba(79, 46, 43, .14);
+    }
+
+    .caption {
+      margin-top: 10px;
+      text-align: center;
+      font-size: .85rem;
+      font-style: italic;
+    }
+
+    .memory p { margin-top: 15px; }
+
+    .music {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 25px;
+      background: linear-gradient(120deg, #fff7f4, #ffe9e1);
+    }
+
+    .music-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .music-icon {
+      display: grid;
+      place-items: center;
+      width: 80px;
+      aspect-ratio: 1;
+      border-radius: 22px;
+      background: var(--pink);
+      color: white;
+      font-size: 2rem;
+    }
+
+    .music h2 { font-size: 1.7rem; }
+    .music-status { margin-top: 10px; font-size: .85rem; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .stat {
+      padding: 20px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .55);
+      color: var(--muted);
+      text-align: center;
+      font-size: .8rem;
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--dark-pink);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      line-height: 1;
+    }
+
+    .center { text-align: center; }
+    .center p { max-width: 640px; margin: 15px auto 0; }
+
+    .emoji {
+      margin: 12px 0;
+      font-size: 3.4rem;
+    }
+
+    .highlight {
+      margin-top: 22px;
+      color: var(--dark-pink);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 23px;
+    }
+
+    .playful {
+      min-height: 255px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .playful p { margin: 10px 0 19px; }
+
+    #kangen {
+      min-height: 30px;
+      margin-top: 18px;
+      color: var(--dark-pink);
+      font-weight: bold;
+    }
+
+    .letter {
+      display: none;
+      margin-top: 20px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdfb;
+      text-align: left;
+      animation: muncul .4s ease-out;
+    }
+
+    .letter p {
+      margin-bottom: 12px;
+      color: #684c47;
+    }
+
+    @keyframes muncul {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .countdown-card {
+      color: white;
+      text-align: center;
+      background: linear-gradient(130deg, #bd596b, #e78788);
+    }
+
+    .countdown-card .eyebrow,
+    .countdown-card p { color: #fff4f1; }
+
+    .countdown {
+      margin: 20px 0 12px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: bold;
+    }
+
+    footer {
+      padding: 40px 20px 55px;
+      color: #997c76;
+      text-align: center;
+      font-size: .9rem;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      z-index: 10;
+      pointer-events: none;
+      animation: floatUp 5s linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(0) rotate(0); }
+      20% { opacity: .9; }
+      100% { opacity: 0; transform: translateY(-110vh) rotate(180deg); }
+    }
+
+    @media (max-width: 720px) {
+      .hero-grid, .memory, .two-col { grid-template-columns: 1fr; }
+      .hero { text-align: center; }
+      .hero p { margin-inline: auto; }
+      .hero-picture { grid-row: 1; width: min(75vw, 340px); }
+      .music { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#atas">dear <span>distance</span> ♡</a>
+      <a href="#cerita">Cerita kita</a>
+    </div>
+  </header>
+
+  <section class="hero" id="atas">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">✦ dibuat khusus untukmu</span>
+        <span class="script">Jarak boleh jauh,</span>
+        <h1>kamu tetap rumah.</h1>
+        <p>
+          Sebuah sudut kecil untuk menyimpan tawa, rindu,
+          dan segala hal sederhana yang selalu membuatku ingat pada kita.
+        </p>
+        <a class="button" href="#cerita">Buka kenangan kita ↓</a>
+      </div>
+
+      <div class="hero-picture">
+        <div class="photo-frame">
+          <img src="foto-kita.jpeg" alt="Foto kenangan kita berdua">
+        </div>
+        <div class="sticker">☁️</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section id="cerita">
+      <div class="card memory">
+        <div>
+          <img class="memory-img" src="foto-kita.jpeg" alt="Foto kita">
+          <p class="caption">satu foto, seribu alasan untuk tersenyum</p>
+        </div>
+
+        <div>
+          <span class="eyebrow">01 — album kecil kita</span>
+          <h2>Foto yang selalu kusuka</h2>
+          <p>
+            Foto ini mungkin cuma sebuah gambar. Tapi buat aku,
+            ini adalah salah satu kenangan yang selalu berhasil
+            membuat hari terasa lebih hangat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card music">
+        <div class="music-row">
+          <div class="music-icon">♫</div>
+          <div>
+            <span class="eyebrow">lagu kita</span>
+            <h2>Satu lagu untuk berdua</h2>
+            <p>Dengarkan pelan-pelan. Anggap saja aku sedang duduk di sebelahmu.</p>
+          </div>
+        </div>
+
+        <div>
+          <button class="button button-light" id="musicButton">▶ Putar lagu</button>
+          <p class="music-status" id="statusLagu">Belum diputar</p>
+        </div>
+
+        <audio id="lagu" loop>
+          <source src="lagu-kita.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <span class="eyebrow">02 — perjalanan kita</span>
+        <h2>Sudah sejauh ini, ya.</h2>
+        <p>Sejak 11 Agustus 2026, kita terus menulis cerita ini bersama.</p>
+
+        <div class="stats">
+          <div class="stat"><strong id="hari">0</strong>hari</div>
+          <div class="stat"><strong id="jam">0</strong>jam</div>
+          <div class="stat"><strong id="menit">0</strong>menit</div>
+          <div class="stat"><strong id="detik">0</strong>detik</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card center">
+        <span class="eyebrow">03 — tentang jarak</span>
+        <div class="emoji">🧑‍❤️‍💋‍👩</div>
+        <h2>Bukan dekat di peta,<br>tetapi dekat di hati.</h2>
+        <p>
+          Aku mungkin tidak selalu bisa datang saat kamu rindu
+          atau langsung memelukmu ketika sedih. Tapi tidak ada jarak
+          yang bisa mengurangi betapa pentingnya kamu bagiku.
+        </p>
+        <h3 class="highlight">Jarak hanya memisahkan tempat, bukan perasaan. ♡</h3>
+      </div>
+    </section>
+
+    <section>
+      <div class="two-col">
+        <div class="card playful">
+          <span class="eyebrow">tekan jika rindu</span>
+          <h2>Seberapa kangen aku?</h2>
+          <p>Jangan kaget kalau jawabannya berlebihan.</p>
+          <div>
+            <button class="button" id="kangenButton">♡ Aku kangen kamu</button>
+            <div id="kangen"></div>
+          </div>
+        </div>
+
+        <div class="card playful">
+          <span class="eyebrow">ada surat kecil</span>
+          <h2>Untuk kamu,</h2>
+          <p>Ada beberapa kata yang lebih nyaman kutitipkan di sini.</p>
+
+          <div>
+            <button class="button button-light" id="letterButton">💌 Buka surat</button>
+
+            <div class="letter" id="surat">
+              <p>Untuk kamu yang sedang jauh di sana,</p>
+              <p>
+                Aku mungkin tidak selalu pandai mengungkapkan perasaanku.
+                Kadang aku cuma bilang “aku kangen”, padahal rasanya
+                jauh lebih besar dari itu.
+              </p>
+              <p>
+                Terima kasih karena masih bertahan dan terus berjalan bersamaku.
+                Aku tidak menjanjikan semuanya akan selalu mudah,
+                tapi aku ingin terus berusaha bersamamu.
+              </p>
+              <h3>Aku sayang kamu. ♡</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card countdown-card">
+        <span class="eyebrow">pertemuan berikutnya</span>
+        <h2>Menuju hari yang paling kutunggu</h2>
+        <div class="countdown" id="countdown">Menghitung...</div>
+        <p>Kita akan bertemu pada <strong>31 Oktober 2026</strong> ♡</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card center">
+        <div class="emoji">♥</div>
+        <h2>Ada seseorang di sini<br>yang selalu memilih kamu.</h2>
+        <p>Bahkan ketika jarak mencoba membuat semuanya terasa sulit.</p>
+        <h3 class="highlight">I love you, always. ♡</h3>
+      </div>
+    </section>
+  </main>
+
+  <footer>Dibuat dengan ♡ khusus untuk orang yang paling aku sayang.</footer>
+
+  <script>
+    const relationshipStart = new Date(2026, 7, 11);
+    const meetingDate = new Date(2026, 9, 31, 0, 0, 0);
+
+    const get = (id) => document.getElementById(id);
+
+    function twoDigit(number) {
+      return String(Math.max(0, number)).padStart(2, "0");
+    }
+
+    function updateCounter() {
+      const totalSeconds = Math.max(
+        0,
+        Math.floor((Date.now() - relationshipStart) / 1000)
+      );
+
+      get("hari").textContent = Math.floor(totalSeconds / 86400);
+      get("jam").textContent = twoDigit(Math.floor((totalSeconds % 86400) / 3600));
+      get("menit").textContent = twoDigit(Math.floor((totalSeconds % 3600) / 60));
+      get("detik").textContent = twoDigit(totalSeconds % 60);
+    }
+
+    function updateCountdown() {
+      const seconds = Math.floor((meetingDate - Date.now()) / 1000);
+
+      if (seconds <= 0) {
+        get("countdown").textContent = "♡ Hari ini kita bertemu! ♡";
+        return;
+      }
+
+      const days = Math.floor(seconds / 86400);
+      const hours = twoDigit(Math.floor((seconds % 86400) / 3600));
+      const minutes = twoDigit(Math.floor((seconds % 3600) / 60));
+      const secondsLeft = twoDigit(seconds % 60);
+
+      get("countdown").textContent =
+        `${days} hari · ${hours} jam · ${minutes} menit · ${secondsLeft} detik`;
+    }
+
+    const audio = get("lagu");
+    const musicButton = get("musicButton");
+
+    musicButton.addEventListener("click", async () => {
+      try {
+        if (audio.paused) {
+          await audio.play();
+          musicButton.textContent = "❚❚ Jeda lagu";
+          get("statusLagu").textContent = "♫ Sekarang lagu kita sedang diputar";
+        } else {
+          audio.pause();
+          musicButton.textContent = "▶ Putar lagu";
+          get("statusLagu").textContent = "Lagu dijeda";
+        }
+      } catch {
+        get("statusLagu").textContent =
+          "Tambahkan file lagu-kita.mp3 terlebih dahulu.";
+      }
+    });
+
+    const messages = [
+      "Aku kangen kamu ♡",
+      "Kangennya sudah level tidak bisa dijelaskan 🥺",
+      "Aku ingin ketemu kamu sekarang juga.",
+      "Jaraknya boleh jauh, tapi kamu tetap dekat di hati.",
+      "Aku butuh teleportasi sekarang juga! ☁️",
+      "Kangen banget sampai Wi-Fi pun terasa tidak cukup."
+    ];
+
+    get("kangenButton").addEventListener("click", () => {
+      get("kangen").textContent =
+        messages[Math.floor(Math.random() * messages.length)];
+      createHeart();
+    });
+
+    get("letterButton").addEventListener("click", () => {
+      const letter = get("surat");
+      const open = letter.style.display === "block";
+
+      letter.style.display = open ? "none" : "block";
+      get("letterButton").textContent = open ? "💌 Buka surat" : "Tutup surat";
+    });
+
+    function createHeart() {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      heart.textContent = ["♡", "♥", "✦"][Math.floor(Math.random() * 3)];
+      heart.style.left = `${Math.random() * 90 + 5}vw`;
+      heart.style.fontSize = `${Math.random() * 18 + 18}px`;
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    updateCounter();
+    updateCountdown();
+
+    setInterval(updateCounter, 1000);
+    setInterval(updateCountdown, 1000);
+    setInterval(createHeart, 3200);
+  </script>
+</body>
+</html>
